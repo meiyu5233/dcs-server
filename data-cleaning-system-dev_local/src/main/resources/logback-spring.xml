@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <property resource="application.properties"/>
+    <property name="LOG_HOME" value="${logging.path}"/>
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <springProfile name="dev">
+        <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_dev_info.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <appender name="fileWarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_dev_warn.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_dev_error.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <root level="info">
+            <appender-ref ref="consoleLog"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileWarnLog"/>
+            <appender-ref ref="fileErrorLog"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_test_info.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <appender name="fileWarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_test_warn.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_test_error.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <root level="info">
+            <appender-ref ref="consoleLog"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileWarnLog"/>
+            <appender-ref ref="fileErrorLog"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_prod_info.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <appender name="fileWarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_prod_warn.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName %thread %-5level %logger{36} %msg%n</pattern>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--路径-->
+                <fileNamePattern>${LOG_HOME}_prod_error.%d.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+        <root level="info">
+            <appender-ref ref="consoleLog"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileWarnLog"/>
+            <appender-ref ref="fileErrorLog"/>
+        </root>
+    </springProfile>
+
+
+</configuration>  

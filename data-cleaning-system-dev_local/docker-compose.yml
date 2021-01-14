@@ -1,0 +1,69 @@
+version: '3'
+services:
+  dcs:
+    image: registry.tmxmall.com/library/java-server:latest
+    volumes:
+      - /tmxbase:/tmxbase
+      - /tmxbase/log:/home/work/var/log
+    environment:
+      - JAVA_XMS=-Xms1G
+      - JAVA_XMX=-Xmx1G
+      - JAVA_XMN=-Xmn512M
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - NLP_ANALYSIS_HOST=http://nginx:80
+      - BLOOM_REDIS_HOST=bloom
+      - BLOOM_REDIS_port=6379
+      - MYSQL_HOST=192.168.31.221
+      - ACTIVE_MQ_HOST=192.168.31.221
+      - REDIS_HOST=192.168.31.221
+      - STORAGE_PATH=/tmxbase/dcs/storage/
+    container_name: tmxmall-dcs
+    ports:
+      - 8112:8112
+    restart: always
+    entrypoint: ["/bin/sh", "/home/work/software/java-server/deploy.sh", "dcs"]
+    networks:
+      - dcs
+  nlp-analysis:
+    image: registry.tmxmall.com/nlp/multi-nlp-app:latest
+    volumes:
+      - /tmxbase:/tmxbase
+      - /tmxbase/log:/usr/src/app/log
+    container_name: tmxmall-analysis
+    restart: always
+    networks:
+      - dcs
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+        reservations:
+          cpus: '0.5'
+  bloom:
+    image: registry.tmxmall.com/library/rebloom:latest
+    container_name: tmxmall-bloom
+    restart: always
+    volumes:
+      - /tmxbase/bloom:/data
+      - /etc/localtime:/etc/localtime
+    networks:
+      - dcs
+  nginx:
+    image: registry.tmxmall.com/tmxmall/nginx:develop
+    container_name: dcs-nginx
+    restart: always
+    ports:
+      - 81:80
+    volumes:
+      - /tmxbase:/tmxbase
+      - /tmxbase//dcs/log:/home/work/var/log
+      - /etc/localtime:/etc/localtime
+    command: ["/bin/sh", "/home/work/deploy.sh", "nginx.dcs.conf"]
+    networks:
+      - dcs
+networks:
+  dcs:
+    external:
+      name: dcs

@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tmxbase.dcsserver.dal.mapper.CrawlerSourceSiteDoMapper">
+    <resultMap id="BaseResultMap" type="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDo">
+        <id column="F_id" jdbcType="INTEGER" property="fId"/>
+        <result column="F_enabled" jdbcType="TINYINT" property="fEnabled"/>
+        <result column="F_source_site_id" jdbcType="VARCHAR" property="fSourceSiteId"/>
+        <result column="F_source_site_name" jdbcType="VARCHAR" property="fSourceSiteName"/>
+        <result column="F_source_site_uri" jdbcType="VARCHAR" property="fSourceSiteUri"/>
+        <result column="F_crawler_status" jdbcType="TINYINT" property="fCrawlerStatus"/>
+        <result column="F_crawler_enabled" jdbcType="TINYINT" property="fCrawlerEnabled"/>
+        <result column="F_use_proxy" jdbcType="TINYINT" property="fUseProxy"/>
+        <result column="F_crawl_depth" jdbcType="INTEGER" property="fCrawlDepth"/>
+        <result column="F_lan" jdbcType="VARCHAR" property="fLan"/>
+        <result column="F_country" jdbcType="VARCHAR" property="fCountry"/>
+        <result column="F_source_category" jdbcType="VARCHAR" property="fSourceCategory"/>
+        <result column="F_platform_category" jdbcType="VARCHAR" property="fPlatformCategory"/>
+        <result column="F_media" jdbcType="VARCHAR" property="fMedia"/>
+        <result column="F_parser" jdbcType="VARCHAR" property="fParser"/>
+        <result column="F_create_time" jdbcType="TIMESTAMP" property="fCreateTime"/>
+        <result column="F_modify_time" jdbcType="TIMESTAMP" property="fModifyTime"/>
+        <result column="F_last_crawl_time" jdbcType="TIMESTAMP" property="fLastCrawlTime"/>
+        <result column="F_next_crawl_time" jdbcType="TIMESTAMP" property="fNextCrawlTime"/>
+        <result column="F_crawl_interval" jdbcType="INTEGER" property="fCrawlInterval"/>
+        <result column="F_crawl_threads" jdbcType="INTEGER" property="fCrawlThreads"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    F_id, F_enabled, F_source_site_id, F_source_site_name, F_source_site_uri, F_crawler_status, 
+    F_crawler_enabled, F_use_proxy, F_crawl_depth, F_lan, F_country, F_source_category, 
+    F_platform_category, F_media, F_parser, F_create_time, F_modify_time, F_last_crawl_time, 
+    F_next_crawl_time, F_crawl_interval, F_crawl_threads
+  </sql>
+    <select id="selectByExample" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDoExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_crawler_source_site
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crawler_source_site
+        where F_id = #{fId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_crawler_source_site
+    where F_id = #{fId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDoExample">
+        delete from t_crawler_source_site
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDo">
+    insert into t_crawler_source_site (F_id, F_enabled, F_source_site_id, 
+      F_source_site_name, F_source_site_uri, F_crawler_status, 
+      F_crawler_enabled, F_use_proxy, F_crawl_depth, 
+      F_lan, F_country, F_source_category, 
+      F_platform_category, F_media, F_parser, 
+      F_create_time, F_modify_time, F_last_crawl_time, 
+      F_next_crawl_time, F_crawl_interval, F_crawl_threads
+      )
+    values (#{fId,jdbcType=INTEGER}, #{fEnabled,jdbcType=TINYINT}, #{fSourceSiteId,jdbcType=VARCHAR}, 
+      #{fSourceSiteName,jdbcType=VARCHAR}, #{fSourceSiteUri,jdbcType=VARCHAR}, #{fCrawlerStatus,jdbcType=TINYINT}, 
+      #{fCrawlerEnabled,jdbcType=TINYINT}, #{fUseProxy,jdbcType=TINYINT}, #{fCrawlDepth,jdbcType=INTEGER}, 
+      #{fLan,jdbcType=VARCHAR}, #{fCountry,jdbcType=VARCHAR}, #{fSourceCategory,jdbcType=VARCHAR}, 
+      #{fPlatformCategory,jdbcType=VARCHAR}, #{fMedia,jdbcType=VARCHAR}, #{fParser,jdbcType=VARCHAR}, 
+      #{fCreateTime,jdbcType=TIMESTAMP}, #{fModifyTime,jdbcType=TIMESTAMP}, #{fLastCrawlTime,jdbcType=TIMESTAMP}, 
+      #{fNextCrawlTime,jdbcType=TIMESTAMP}, #{fCrawlInterval,jdbcType=INTEGER}, #{fCrawlThreads,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDo">
+        insert into t_crawler_source_site
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">
+                F_id,
+            </if>
+            <if test="fEnabled != null">
+                F_enabled,
+            </if>
+            <if test="fSourceSiteId != null">
+                F_source_site_id,
+            </if>
+            <if test="fSourceSiteName != null">
+                F_source_site_name,
+            </if>
+            <if test="fSourceSiteUri != null">
+                F_source_site_uri,
+            </if>
+            <if test="fCrawlerStatus != null">
+                F_crawler_status,
+            </if>
+            <if test="fCrawlerEnabled != null">
+                F_crawler_enabled,
+            </if>
+            <if test="fUseProxy != null">
+                F_use_proxy,
+            </if>
+            <if test="fCrawlDepth != null">
+                F_crawl_depth,
+            </if>
+            <if test="fLan != null">
+                F_lan,
+            </if>
+            <if test="fCountry != null">
+                F_country,
+            </if>
+            <if test="fSourceCategory != null">
+                F_source_category,
+            </if>
+            <if test="fPlatformCategory != null">
+                F_platform_category,
+            </if>
+            <if test="fMedia != null">
+                F_media,
+            </if>
+            <if test="fParser != null">
+                F_parser,
+            </if>
+            <if test="fCreateTime != null">
+                F_create_time,
+            </if>
+            <if test="fModifyTime != null">
+                F_modify_time,
+            </if>
+            <if test="fLastCrawlTime != null">
+                F_last_crawl_time,
+            </if>
+            <if test="fNextCrawlTime != null">
+                F_next_crawl_time,
+            </if>
+            <if test="fCrawlInterval != null">
+                F_crawl_interval,
+            </if>
+            <if test="fCrawlThreads != null">
+                F_crawl_threads,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">
+                #{fId,jdbcType=INTEGER},
+            </if>
+            <if test="fEnabled != null">
+                #{fEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="fSourceSiteId != null">
+                #{fSourceSiteId,jdbcType=VARCHAR},
+            </if>
+            <if test="fSourceSiteName != null">
+                #{fSourceSiteName,jdbcType=VARCHAR},
+            </if>
+            <if test="fSourceSiteUri != null">
+                #{fSourceSiteUri,jdbcType=VARCHAR},
+            </if>
+            <if test="fCrawlerStatus != null">
+                #{fCrawlerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="fCrawlerEnabled != null">
+                #{fCrawlerEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="fUseProxy != null">
+                #{fUseProxy,jdbcType=TINYINT},
+            </if>
+            <if test="fCrawlDepth != null">
+                #{fCrawlDepth,jdbcType=INTEGER},
+            </if>
+            <if test="fLan != null">
+                #{fLan,jdbcType=VARCHAR},
+            </if>
+            <if test="fCountry != null">
+                #{fCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="fSourceCategory != null">
+                #{fSourceCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="fPlatformCategory != null">
+                #{fPlatformCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="fMedia != null">
+                #{fMedia,jdbcType=VARCHAR},
+            </if>
+            <if test="fParser != null">
+                #{fParser,jdbcType=VARCHAR},
+            </if>
+            <if test="fCreateTime != null">
+                #{fCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fModifyTime != null">
+                #{fModifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fLastCrawlTime != null">
+                #{fLastCrawlTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fNextCrawlTime != null">
+                #{fNextCrawlTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fCrawlInterval != null">
+                #{fCrawlInterval,jdbcType=INTEGER},
+            </if>
+            <if test="fCrawlThreads != null">
+                #{fCrawlThreads,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDoExample"
+            resultType="java.lang.Long">
+        select count(*) from t_crawler_source_site
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_crawler_source_site
+        <set>
+            <if test="record.fId != null">
+                F_id = #{record.fId,jdbcType=INTEGER},
+            </if>
+            <if test="record.fEnabled != null">
+                F_enabled = #{record.fEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="record.fSourceSiteId != null">
+                F_source_site_id = #{record.fSourceSiteId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fSourceSiteName != null">
+                F_source_site_name = #{record.fSourceSiteName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fSourceSiteUri != null">
+                F_source_site_uri = #{record.fSourceSiteUri,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fCrawlerStatus != null">
+                F_crawler_status = #{record.fCrawlerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.fCrawlerEnabled != null">
+                F_crawler_enabled = #{record.fCrawlerEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="record.fUseProxy != null">
+                F_use_proxy = #{record.fUseProxy,jdbcType=TINYINT},
+            </if>
+            <if test="record.fCrawlDepth != null">
+                F_crawl_depth = #{record.fCrawlDepth,jdbcType=INTEGER},
+            </if>
+            <if test="record.fLan != null">
+                F_lan = #{record.fLan,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fCountry != null">
+                F_country = #{record.fCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fSourceCategory != null">
+                F_source_category = #{record.fSourceCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fPlatformCategory != null">
+                F_platform_category = #{record.fPlatformCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fMedia != null">
+                F_media = #{record.fMedia,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fParser != null">
+                F_parser = #{record.fParser,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fCreateTime != null">
+                F_create_time = #{record.fCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.fModifyTime != null">
+                F_modify_time = #{record.fModifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.fLastCrawlTime != null">
+                F_last_crawl_time = #{record.fLastCrawlTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.fNextCrawlTime != null">
+                F_next_crawl_time = #{record.fNextCrawlTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.fCrawlInterval != null">
+                F_crawl_interval = #{record.fCrawlInterval,jdbcType=INTEGER},
+            </if>
+            <if test="record.fCrawlThreads != null">
+                F_crawl_threads = #{record.fCrawlThreads,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_crawler_source_site
+        set F_id = #{record.fId,jdbcType=INTEGER},
+        F_enabled = #{record.fEnabled,jdbcType=TINYINT},
+        F_source_site_id = #{record.fSourceSiteId,jdbcType=VARCHAR},
+        F_source_site_name = #{record.fSourceSiteName,jdbcType=VARCHAR},
+        F_source_site_uri = #{record.fSourceSiteUri,jdbcType=VARCHAR},
+        F_crawler_status = #{record.fCrawlerStatus,jdbcType=TINYINT},
+        F_crawler_enabled = #{record.fCrawlerEnabled,jdbcType=TINYINT},
+        F_use_proxy = #{record.fUseProxy,jdbcType=TINYINT},
+        F_crawl_depth = #{record.fCrawlDepth,jdbcType=INTEGER},
+        F_lan = #{record.fLan,jdbcType=VARCHAR},
+        F_country = #{record.fCountry,jdbcType=VARCHAR},
+        F_source_category = #{record.fSourceCategory,jdbcType=VARCHAR},
+        F_platform_category = #{record.fPlatformCategory,jdbcType=VARCHAR},
+        F_media = #{record.fMedia,jdbcType=VARCHAR},
+        F_parser = #{record.fParser,jdbcType=VARCHAR},
+        F_create_time = #{record.fCreateTime,jdbcType=TIMESTAMP},
+        F_modify_time = #{record.fModifyTime,jdbcType=TIMESTAMP},
+        F_last_crawl_time = #{record.fLastCrawlTime,jdbcType=TIMESTAMP},
+        F_next_crawl_time = #{record.fNextCrawlTime,jdbcType=TIMESTAMP},
+        F_crawl_interval = #{record.fCrawlInterval,jdbcType=INTEGER},
+        F_crawl_threads = #{record.fCrawlThreads,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDo">
+        update t_crawler_source_site
+        <set>
+            <if test="fEnabled != null">
+                F_enabled = #{fEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="fSourceSiteId != null">
+                F_source_site_id = #{fSourceSiteId,jdbcType=VARCHAR},
+            </if>
+            <if test="fSourceSiteName != null">
+                F_source_site_name = #{fSourceSiteName,jdbcType=VARCHAR},
+            </if>
+            <if test="fSourceSiteUri != null">
+                F_source_site_uri = #{fSourceSiteUri,jdbcType=VARCHAR},
+            </if>
+            <if test="fCrawlerStatus != null">
+                F_crawler_status = #{fCrawlerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="fCrawlerEnabled != null">
+                F_crawler_enabled = #{fCrawlerEnabled,jdbcType=TINYINT},
+            </if>
+            <if test="fUseProxy != null">
+                F_use_proxy = #{fUseProxy,jdbcType=TINYINT},
+            </if>
+            <if test="fCrawlDepth != null">
+                F_crawl_depth = #{fCrawlDepth,jdbcType=INTEGER},
+            </if>
+            <if test="fLan != null">
+                F_lan = #{fLan,jdbcType=VARCHAR},
+            </if>
+            <if test="fCountry != null">
+                F_country = #{fCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="fSourceCategory != null">
+                F_source_category = #{fSourceCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="fPlatformCategory != null">
+                F_platform_category = #{fPlatformCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="fMedia != null">
+                F_media = #{fMedia,jdbcType=VARCHAR},
+            </if>
+            <if test="fParser != null">
+                F_parser = #{fParser,jdbcType=VARCHAR},
+            </if>
+            <if test="fCreateTime != null">
+                F_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fModifyTime != null">
+                F_modify_time = #{fModifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fLastCrawlTime != null">
+                F_last_crawl_time = #{fLastCrawlTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fNextCrawlTime != null">
+                F_next_crawl_time = #{fNextCrawlTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fCrawlInterval != null">
+                F_crawl_interval = #{fCrawlInterval,jdbcType=INTEGER},
+            </if>
+            <if test="fCrawlThreads != null">
+                F_crawl_threads = #{fCrawlThreads,jdbcType=INTEGER},
+            </if>
+        </set>
+        where F_id = #{fId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDo">
+    update t_crawler_source_site
+    set F_enabled = #{fEnabled,jdbcType=TINYINT},
+      F_source_site_id = #{fSourceSiteId,jdbcType=VARCHAR},
+      F_source_site_name = #{fSourceSiteName,jdbcType=VARCHAR},
+      F_source_site_uri = #{fSourceSiteUri,jdbcType=VARCHAR},
+      F_crawler_status = #{fCrawlerStatus,jdbcType=TINYINT},
+      F_crawler_enabled = #{fCrawlerEnabled,jdbcType=TINYINT},
+      F_use_proxy = #{fUseProxy,jdbcType=TINYINT},
+      F_crawl_depth = #{fCrawlDepth,jdbcType=INTEGER},
+      F_lan = #{fLan,jdbcType=VARCHAR},
+      F_country = #{fCountry,jdbcType=VARCHAR},
+      F_source_category = #{fSourceCategory,jdbcType=VARCHAR},
+      F_platform_category = #{fPlatformCategory,jdbcType=VARCHAR},
+      F_media = #{fMedia,jdbcType=VARCHAR},
+      F_parser = #{fParser,jdbcType=VARCHAR},
+      F_create_time = #{fCreateTime,jdbcType=TIMESTAMP},
+      F_modify_time = #{fModifyTime,jdbcType=TIMESTAMP},
+      F_last_crawl_time = #{fLastCrawlTime,jdbcType=TIMESTAMP},
+      F_next_crawl_time = #{fNextCrawlTime,jdbcType=TIMESTAMP},
+      F_crawl_interval = #{fCrawlInterval,jdbcType=INTEGER},
+      F_crawl_threads = #{fCrawlThreads,jdbcType=INTEGER}
+    where F_id = #{fId,jdbcType=INTEGER}
+  </update>
+    <select id="selectByExampleWithRowbounds"
+            parameterType="com.tmxbase.dcsserver.dal.entity.CrawlerSourceSiteDoExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_crawler_source_site
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+</mapper>
